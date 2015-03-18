@@ -1,18 +1,18 @@
 library(sqldf)
 library(dplyr)
 
-featuresfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/features.txt'
-actlabelfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/activity_labels.txt'
+featuresfile <- './UCI HAR Dataset/features.txt'
+actlabelfile <- './UCI HAR Dataset/activity_labels.txt'
 
-xtrainfile<- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/train/X_train.txt'
-ytrainfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/train/y_train.txt'
-subjecttrainfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/train/subject_train.txt'
+xtrainfile<- './UCI HAR Dataset/train/X_train.txt'
+ytrainfile <- './UCI HAR Dataset/train/y_train.txt'
+subjecttrainfile <- './UCI HAR Dataset/train/subject_train.txt'
 
-xtestfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/test/X_test.txt'
-ytestfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/test/y_test.txt'
-subjecttestfile <- 'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/test/subject_test.txt'
+xtestfile <- './UCI HAR Dataset/test/X_test.txt'
+ytestfile <- './UCI HAR Dataset/test/y_test.txt'
+subjecttestfile <- './UCI HAR Dataset/test/subject_test.txt'
 
-tidyfile <-'C:/Users/Xiaohui/Documents/MOOC/assign1/UCI HAR Dataset/tidy.txt'
+tidyfile <-'./tidy.txt'
 
 #Read features to get colnames
 d <- read.table(file=featuresfile)
@@ -61,5 +61,6 @@ b <- grepl("mean|std", colnames)
 extract <- wholedata[, b]
 
 # Step 5:  Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-tidy <- aggregate(. ~ subject + activity, data = extract, mean)
+tidy <- aggregate(. ~ activity + subject, data = extract, mean)
+tidy<- tidy [with(tidy, order(activity)), ]
 write.table(tidy, file=tidyfile, row.name=FALSE)
