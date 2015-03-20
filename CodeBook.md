@@ -26,7 +26,8 @@ Steps followed to derive tidy.txt
 3. Uses descriptive activity names to name the activities in the data set
 4. Appropriately labels the data set with descriptive variable names. 
 5. From the data set in step 4, creates an independent tidy data set with the average of each variable for each activity and each subject.
-The dimension of the final tidy data set is 11880 * 6. 
+The dimension of the final tidy data set is 11,880 * 6. 
+
 11,880 observations = 30 subjects x 6 activities X 66 measurements
 
 This dataset satisfy the criteria for tidy data set
