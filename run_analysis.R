@@ -1,5 +1,6 @@
 library(sqldf)
 library(dplyr)
+library(tidyr)
 
 featuresfile <- './UCI HAR Dataset/features.txt'
 actlabelfile <- './UCI HAR Dataset/activity_labels.txt'
@@ -50,7 +51,7 @@ ytest<-read.table(file=ytestfile)
 ytestdes <- sqldf("select * from ytest, actlabel where ytest.V1 = actlabel.V1")
 activity <- ytestdes[, 3]
 
-#combine them columnwisely
+#combine them columnwisel
 testsubactivity <- cbind(xtest, subjectstest, activity)
 
 #combine train and test into one data set
@@ -61,6 +62,14 @@ b <- grepl("mean|std", colnames)
 extract <- wholedata[, b]
 
 # Step 5:  Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-tidy <- aggregate(. ~ activity + subject, data = extract, mean)
+tidy <- aggregate(. ~ activity + subject, data=extract, mean)
 tidy<- tidy [with(tidy, order(activity)), ]
-write.table(tidy, file=tidyfile, row.name=FALSE)
+tidy<- tbl_df(tidy)
+tidy1 <- 
+  tidy %>% 
+  gather(measure, value, -(activity:subject)) %>%
+  separate(measure, c("part", "method", "axis"), extra="merge") 
+# %>% print
+#   
+
+write.table(tidy1, file=tidyfile, row.name=FALSE)
