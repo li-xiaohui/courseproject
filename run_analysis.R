@@ -58,7 +58,7 @@ testsubactivity <- cbind(xtest, subjectstest, activity)
 wholedata <- rbind(trainsubactivity, testsubactivity)
 
 # Extract only measurements on the mean and std
-b <- grepl("mean|std", colnames)
+b <- grepl("mean\\(\\)|std\\(\\)", colnames)
 extract <- wholedata[, b]
 
 # Step 5:  Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
